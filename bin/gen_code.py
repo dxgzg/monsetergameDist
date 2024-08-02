@@ -34,17 +34,18 @@ class Meta:
 
     def export_server_helper_file_create(self):
         file_name = "Helper.go"
-        helper_content = go_helper_template.replace("$res_field_content", res_field_content). \
-            replace("$res_field_init_content", res_field_init_content).replace("$res_load", res_load). \
-            replace("$res_load_funcs", res_load_funcs)
+        helper_content = go_helper_template.replace("${res_field_content}", res_field_content). \
+            replace("${res_field_init_content}", res_field_init_content).replace("${res_load}", res_load). \
+            replace("${res_load_funcs}", res_load_funcs)
 
-        with open(os.path.join(const.server_helper_out_path, file_name), "w") as file:
+        with open(os.path.join(const.server_helper_out_path, file_name), "w",encoding='utf-8') as file:
             file.write(helper_content)
 
     def export_server_helper_gen(self, file_path):
         file_base_name = file_path.stem
-        file_base_name_first_upper = file_base_name[0].upper() + file_base_name[1:]
-        file_base_name_first_lower = file_base_name[0].lower() + file_base_name[1:]
+        file_base_name_without_meta = re.sub(r'meta', '', file_base_name, flags=re.IGNORECASE)
+        file_base_name_first_upper = file_base_name_without_meta[0].upper() + file_base_name_without_meta[1:]
+        file_base_name_first_lower = file_base_name_without_meta[0].lower() + file_base_name_without_meta[1:]
 
         self.proc_server_helper_field_content(file_base_name_first_upper)
         self.proc_server_helper_init_content(file_base_name_first_upper)
@@ -66,7 +67,10 @@ class Meta:
 
     def proc_server_helper_load_funcs(self, file_base_name_first_lower):
         global res_load_funcs
+        file_base_name_first_upper = file_base_name_first_lower[0].upper() + file_base_name_first_lower[1:]
+
         res_func = go_load_funcs_template.replace(code_template_replace_str, file_base_name_first_lower)
+        res_func = res_func.replace(res_first_upper, file_base_name_first_upper)
         res_load_funcs += f"{res_func}\n"
 
     def export_server(self, file_path):
