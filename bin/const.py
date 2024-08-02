@@ -8,3 +8,5 @@ meta_path = os.path.join(target_work_path,"./meta")
 # test use
 server_go_out_path = "./dist"
 server_conf_out_path = "./dist"
+
+server_helper_out_path = os.path.join(target_work_path,server_go_out_path)
