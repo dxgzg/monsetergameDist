@@ -1,6 +1,7 @@
-meta_path = "./meta"
-# server_go_out_path = "../../dist/server/code"
-# server_conf_out_path = "../../dist/server/conf"
+import os
+
+target_work_path = "../conf"
+meta_path = os.path.join(target_work_path,"./meta")
 
 # server_go_out_path = "../dist/server/code"
 # server_conf_out_path = "../dist/server/conf"

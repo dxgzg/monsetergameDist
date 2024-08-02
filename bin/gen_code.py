@@ -5,7 +5,7 @@ import const
 
 
 def run_command(command):
-    result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+    result = subprocess.run(command,cwd=const.target_work_path, capture_output=True, text=True, encoding='utf-8')
 
     print(f"run command result:{result.stdout}")
 
